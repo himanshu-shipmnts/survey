@@ -76,7 +76,7 @@ let typeDefs = gql`
   type Mutation {
     register(email: String!, password: String!): Boolean!
     login(email: String!, password: String!): User
-    createSurvey(survey: SurveyInputType!): Boolean!
+    createSurvey(survey: SurveyInputType!): String!
     submitSurvey(survey: SubmitSurveyInputType!): Boolean!
     convertToThumbnail(url: String!): String
   }

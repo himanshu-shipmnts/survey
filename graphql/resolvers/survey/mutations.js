@@ -9,18 +9,20 @@ const surveyMutations = {
     let updatedUser;
     try {
       // push survey array to user's surveys
-      updatedUser = await User.updateOne(
+      updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
-        { $push: { surveys: args.survey } }
+        { $push: { surveys: args.survey } },
+        { new: true }
       );
     } catch (err) {
       throw new Error(err);
     }
 
     if (updatedUser) {
-      return true;
+      const newSurvey = updatedUser.surveys[updatedUser.surveys.length - 1];
+      return newSurvey._id;
     }
-    return false;
+    throw new Error("Unable to create survey.");
   },
   submitSurvey: async (_, args) => {
     const user = await User.find({
